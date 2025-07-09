@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views  # ✅ Required for login/logout
+from leave_app.views import submit_leave, view_requests, login_view, approve_leave, reject_leave
 
 urlpatterns = [
     path('admin/', admin.site.urls),
