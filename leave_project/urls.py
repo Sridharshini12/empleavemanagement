@@ -15,23 +15,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from django.shortcuts import redirect
 from django.contrib.auth import views as auth_views  # ✅ Required for login/logout
-from leave_app.views import submit_leave, view_requests, login_view, approve_leave, reject_leave
+
+from leave_app.views import view_requests, login_view, approve_leave, reject_leave
+from leave_app.views import submit_leave_request  # ✅ Actual view name
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', lambda request: redirect('login')),
-    # ✅ All app views like /submit, /requests will be handled inside leave_app.urls
-   # path('', include('leave_app.urls')),
-    path('submit/', submit_leave, name='submit_leave'),
+    path('submit/', submit_leave_request, name='submit_leave'),
     path('requests/', view_requests, name='view_requests'),
     path('login/', login_view, name='login'),
     path('approve/<int:leave_id>/', approve_leave, name='approve_leave'),
     path('reject/<int:leave_id>/', reject_leave, name='reject_leave'),
 
-    # ✅ Django built-in login/logout views
+    # ✅ Django built-in login view
     path('accounts/login/', auth_views.LoginView.as_view(template_name='leave_app/login.html'), name='login'),
-
-    
 ]
