@@ -20,11 +20,17 @@ from django.contrib.auth import views as auth_views  # ✅ Required for login/lo
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
+    path('', lambda request: redirect('login')),
     # ✅ All app views like /submit, /requests will be handled inside leave_app.urls
-    path('', include('leave_app.urls')),
+   # path('', include('leave_app.urls')),
+    path('submit/', submit_leave, name='submit_leave'),
+    path('requests/', view_requests, name='view_requests'),
+    path('login/', login_view, name='login'),
+    path('approve/<int:leave_id>/', approve_leave, name='approve_leave'),
+    path('reject/<int:leave_id>/', reject_leave, name='reject_leave'),
 
     # ✅ Django built-in login/logout views
     path('accounts/login/', auth_views.LoginView.as_view(template_name='leave_app/login.html'), name='login'),
+
     
 ]
