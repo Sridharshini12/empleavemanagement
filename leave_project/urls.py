@@ -19,14 +19,15 @@ from django.urls import path
 from django.shortcuts import redirect
 from django.contrib.auth import views as auth_views  # ✅ Required for login/logout
 
-from leave_app.views import view_requests, login_view, approve_leave, reject_leave
+from leave_app.views import view_leave_requests
+
 from leave_app.views import submit_leave_request  # ✅ Actual view name
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', lambda request: redirect('login')),
     path('submit/', submit_leave_request, name='submit_leave'),
-    path('requests/', view_requests, name='view_requests'),
+    path('requests/', view_leave_requests, name='view_requests'),
     path('login/', login_view, name='login'),
     path('approve/<int:leave_id>/', approve_leave, name='approve_leave'),
     path('reject/<int:leave_id>/', reject_leave, name='reject_leave'),
